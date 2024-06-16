@@ -263,6 +263,8 @@ class MPFMonitor():
             _yaml = yaml.YAML(typ='safe')
             with open(self.config_file, 'r') as f:
                 self.config = _yaml.load(f)
+                if self.config is None:
+                    self.config = dict()
         except FileNotFoundError:
                 self.config = dict()
 
