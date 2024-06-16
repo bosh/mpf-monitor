@@ -3,6 +3,7 @@ import queue
 import sys
 import os
 import time
+import io
 
 # will change these to specific imports once code is more final
 from collections import deque
@@ -268,7 +269,10 @@ class MPFMonitor():
     def save_config(self):
         self.log.debug("Saving config to disk")
         with open(self.config_file, 'w') as f:
-            f.write(yaml.dump(self.config, default_flow_style=False))
+            _yaml = yaml.YAML(typ='safe')
+            buf = io.StringIO()
+            _yaml.dump(self.config, buf)
+            f.write(buf.getvalue())
 
     def closeEvent(self, event):
         self.write_local_settings()
